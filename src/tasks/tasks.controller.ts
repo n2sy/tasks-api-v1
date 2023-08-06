@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Headers, NotFoundException, Param, Post, Query, Req, Res, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Headers, HttpStatus, NotFoundException, Param, ParseIntPipe, Post, Query, Req, Res, ValidationPipe } from '@nestjs/common';
 import { Request, Response, query } from 'express';
 import { TaskDTO } from 'src/DTO/taskDTO';
+import { FusionPipe } from 'src/fusion/fusion.pipe';
 import { Task } from 'src/models/task';
 
 @Controller('tasks')
@@ -29,7 +30,9 @@ export class TasksController {
     }
 
     @Get('all/:id')
-    getOneTasks2(@Req() req : Request, @Res() res : Response, @Param('id') myId) {
+    getOneTasks2(@Req() req : Request, @Res() res : Response, @Param('id', FusionPipe, new ParseIntPipe({
+        errorHttpStatusCode : HttpStatus.NOT_FOUND
+    })) myId) {
        let task = this.allTasks.find((t) => t.id == myId)
     //    let task = this.allTasks.find((t) => t.id === myId)
         if(task)
@@ -71,7 +74,6 @@ export class TasksController {
         console.log(newTask instanceof TaskDTO);
         console.log(newTask);
         
-        
         if(this.allTasks.length)
             newId = this.allTasks[this.allTasks.length - 1].id + 1  
         else
@@ -84,5 +86,10 @@ export class TasksController {
             statut : newTask.statut,
             createdAt : new Date()
         });
+    }
+
+    @Post('testpipe')
+    addNewTask5(@Body(FusionPipe) body) {
+        console.log(body);
     }
 }
