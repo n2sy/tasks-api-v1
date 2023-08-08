@@ -17,6 +17,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BooksModule } from './books/books.module';
 import { BookEntity } from './books/entities/book.entity';
 import { AuthorEntity } from './books/entities/author.entity';
+import { DataSource } from 'typeorm';
 @Module({
   imports: [
     SubModule,
@@ -31,6 +32,9 @@ import { AuthorEntity } from './books/entities/author.entity';
       entities: [BookEntity, AuthorEntity],
       // entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
+      autoLoadEntities: true,
+      dateStrings: true,
+      // logging: true,
     }),
     BooksModule,
   ],
@@ -38,6 +42,7 @@ import { AuthorEntity } from './books/entities/author.entity';
   providers: [AppService, TasksService],
 })
 export class AppModule implements NestModule {
+  constructor(private dataSource: DataSource) {}
   configure(consumer: MiddlewareConsumer) {
     //V1
     // consumer.apply(FirstMiddleware).forRoutes('tasks/new')

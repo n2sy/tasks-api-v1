@@ -9,6 +9,6 @@ export class TimeStampEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @DeleteDateColumn()
+  @DeleteDateColumn({})
   deletedAt: Date;
 }

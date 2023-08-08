@@ -11,14 +11,11 @@ import { AuthorEntity } from './author.entity';
 import { TimeStampEntity } from '../Generics/timestamp';
 
 @Entity('livre')
-export class BookEntity extends TimeStampEntity {
+export class BookEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    length: 20,
-    // update: false,
-  })
+  @Column()
   title: string;
 
   @Column()
@@ -26,6 +23,12 @@ export class BookEntity extends TimeStampEntity {
 
   @Column()
   editor: string;
+
+  @CreateDateColumn({
+    name: 'createdAt',
+    default: 'CURRENT_TIMESTAMP',
+  })
+  createdAt: Date;
 
   @ManyToOne((type) => AuthorEntity, (author) => author.id)
   author: AuthorEntity;
