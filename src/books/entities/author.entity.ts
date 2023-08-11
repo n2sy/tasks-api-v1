@@ -13,6 +13,6 @@ export class AuthorEntity {
   @Column()
   nom: string;
 
-  @OneToMany((type) => BookEntity, (book) => book.id)
-  livres: BookEntity[];
+  // @OneToMany((type) => BookEntity, (book) => book.id)
+  // livres: BookEntity[];
 }

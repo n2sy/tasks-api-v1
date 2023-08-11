@@ -1,17 +1,9 @@
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { AuthorEntity } from './author.entity';
 import { TimeStampEntity } from '../Generics/timestamp';
 
 @Entity('livre')
-export class BookEntity {
+export class BookEntity extends TimeStampEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,12 +15,6 @@ export class BookEntity {
 
   @Column()
   editor: string;
-
-  @CreateDateColumn({
-    name: 'createdAt',
-    default: 'CURRENT_TIMESTAMP',
-  })
-  createdAt: Date;
 
   @ManyToOne((type) => AuthorEntity, (author) => author.id)
   author: AuthorEntity;

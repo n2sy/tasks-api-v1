@@ -17,7 +17,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BooksModule } from './books/books.module';
 import { BookEntity } from './books/entities/book.entity';
 import { AuthorEntity } from './books/entities/author.entity';
-import { DataSource } from 'typeorm';
+import { AuthModule } from './auth/auth.module';
+
 @Module({
   imports: [
     SubModule,
@@ -25,24 +26,24 @@ import { DataSource } from 'typeorm';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '127.0.0.1',
-      port: 8889,
+      port: 3306,
       username: 'root',
-      password: 'root',
-      database: 'booksDMWM',
-      entities: [BookEntity, AuthorEntity],
+      password: '',
+      database: 'booksmanager',
+      //entities: [BookEntity, AuthorEntity],
       // entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
       autoLoadEntities: true,
-      dateStrings: true,
+      //dateStrings: true,
       // logging: true,
     }),
     BooksModule,
+    AuthModule,
   ],
   controllers: [AppController, TasksController],
   providers: [AppService, TasksService],
 })
 export class AppModule implements NestModule {
-  constructor(private dataSource: DataSource) {}
   configure(consumer: MiddlewareConsumer) {
     //V1
     // consumer.apply(FirstMiddleware).forRoutes('tasks/new')

@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsNumber, IsSemVer, IsString } from 'class-validator';
+import { AuthorEntity } from '../entities/author.entity';
 
 export class BookDTO {
   @IsNotEmpty()
@@ -14,6 +15,5 @@ export class BookDTO {
   editor: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  author: number;
+  author: AuthorEntity;
 }
